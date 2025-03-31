@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# Virtualenv
+venv/
+.env
+.env.*
+
+# VS Code
+.vscode/
+
+# macOS / Windows
+.DS_Store
+Thumbs.db
+
+# Cache
+*.sqlite3
+*.db
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Jupyter/Colab
+.ipynb_checkpoints/
+
+
