@@ -13,6 +13,21 @@ client = OpenAI()
 UPLOAD_FOLDER = "knowledge"
 ASSISTANT_ID = os.getenv("ASSISTANT_ID")
 VECTOR_STORE_ID = os.getenv("VECTOR_STORE_ID")
+UPDATE_INSTRUCTIONS= os.getenv("UPDATE_INSTRUCTIONS")
+print(UPDATE_INSTRUCTIONS)
+
+# assistant = client.beta.assistants.retrieve(assistant_id=ASSISTANT_ID)
+# print("Model in use:", assistant.model)
+
+
+if  UPDATE_INSTRUCTIONS=="0":
+     print("Updating Instructions")
+     with open("instructions.txt", "r", encoding="utf-8") as file:
+        instructions = file.read()
+     assistant = client.beta.assistants.update(
+    assistant_id=ASSISTANT_ID,
+    instructions=instructions
+)
 
 # Upload files to vector store or create a new one
 if not VECTOR_STORE_ID:
@@ -49,7 +64,7 @@ if not ASSISTANT_ID:
     assistant = client.beta.assistants.create(
         instructions=instructions,
         name="CreditBPO Lead Converter",
-        model="gpt-4-turbo",
+        model="gpt-4o",
         tools=[{"type": "file_search"}],
         # tool_resources={
         #     "file_search": {
@@ -99,7 +114,7 @@ def ask():
     answer = messages.data[0].content[0].text.value
     cleanedMessage = cleanMessage(answer)
 
-    return jsonify({"answer": answer, "message": cleanedMessage})
+    return jsonify({"answer": answer})
 
 if __name__ == "__main__":
     app.run(debug=True)
